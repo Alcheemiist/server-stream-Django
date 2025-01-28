@@ -2,8 +2,12 @@
 
 from django.urls import path
 from . import views
+from .views import InferenceResultViewSet
+
 
 urlpatterns = [
+
+    path('upload-inference-results/', InferenceResultViewSet.as_view({'post': 'create'})),
     path('', views.index, name='index'),
     path('video_feed/<str:client_id>/', views.live_view, name='live_view'),
     path('mjpeg_stream/<str:client_id>/', views.mjpeg_stream, name='mjpeg_stream'),

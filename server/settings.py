@@ -14,7 +14,10 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+import os
 
+# Chemin du fichier JSON
+JSON_FILE_PATH = os.path.join(BASE_DIR, 'inference_results_1734703751929_updated.json')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -25,7 +28,7 @@ SECRET_KEY = 'django-insecure-7^q4vuy&sm9_76lepd#lq@gg3%9z95(ci)e)8f&wwcc5w6l!jg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.15', 'localhost', '192.168.13.177', "192.168.249.177", "192.168.191.177", "192.168.1.15"]
+ALLOWED_HOSTS = ['192.168.1.15', '127.0.0.1','localhost', '192.168.13.177', "192.168.249.177", "192.168.191.177", "192.168.1.15",'192.168.0.213','192.168.0.212']
 
 
 # Application definition
@@ -74,17 +77,44 @@ WSGI_APPLICATION = 'server.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
+"""
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-        'DIRS': [BASE_DIR / 'streaming' / 'templates'],  # Ensure templates are found
-
-    }
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'microservice_principal',
+        'USER': 'admin',
+        'PASSWORD': 'admin',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    },
+    'people': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'microservice_people',
+        'USER': 'admin',
+        'PASSWORD': 'admin',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    },
+    'vehicles': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'microservice_vehicles',
+        'USER': 'admin',
+        'PASSWORD': 'admin',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    },
+    'garbage': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'microservice_garbage',
+        'USER': 'admin',
+        'PASSWORD': 'admin',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    },
 }
 
 
+"""
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -113,7 +143,7 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)

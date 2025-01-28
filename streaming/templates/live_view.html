@@ -79,13 +79,38 @@
         .back-link a:hover {
             text-decoration: underline;
         }
+        .toggle-heatmap {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .toggle-heatmap a {
+            padding: 8px 16px;
+            background-color: #1db954;
+            color: #ffffff;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .toggle-heatmap a:hover {
+            background-color: #1ed760;
+        }
     </style>
 </head>
 <body>
     <h2>Live View for Client {{ client_id }}</h2>
     
     <div class="video-container">
-        <img src="{% url 'mjpeg_stream' client_id %}" alt="Live Stream">
+        <!-- Mettre à jour l'URL du flux MJPEG en fonction du paramètre heatmap -->
+        <img src="{% url 'mjpeg_stream' client_id %}{% if enable_heatmap %}?heatmap=true{% endif %}" alt="Live Stream">
+    </div>
+
+    <div class="toggle-heatmap">
+        <!-- Bouton pour basculer entre les modes avec/sans heatmap -->
+        {% if enable_heatmap %}
+            <a href="{% url 'live_view' client_id %}">Switch to Stream (No Heatmap)</a>
+        {% else %}
+            <a href="{% url 'live_view' client_id %}?heatmap=true">Switch to Stream with Heatmap</a>
+        {% endif %}
     </div>
 
     <div class="metrics">
