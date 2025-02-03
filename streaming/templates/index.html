@@ -57,7 +57,10 @@
                 {% for cid in current_clients %}
                     <li>
                         <strong>Client {{ cid }}</strong>:
-                        <a href="{% url 'live_view' cid %}">Live View</a>
+                        <div class="button-container">
+                            <a href="{% url 'live_view' cid %}">Stream (No Heatmap)</a>
+                            <a href="{% url 'live_view' cid %}?heatmap=true">Stream with Heatmap</a>
+                        </div>
                     </li>
                 {% empty %}
                     <li class="no-data">No clients connected.</li>
