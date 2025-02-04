@@ -186,7 +186,7 @@ async def stream_frames(client_id, enable_heatmap=False):
                     if frame_index < len(INFERENCE_RESULTS):
                         current_data = INFERENCE_RESULTS[frame_index]
                         for detection in current_data.get("detections", []):
-                            if detection.get("confidence", 0) > 0.5:
+                            if detection.get("confidence", 0) > 0.3:
                                 bbox = detection.get("bounding_box", {})
                                 if all(k in bbox for k in ["x_min", "y_min", "x_max", "y_max"]):
                                     r_min, c_min = int(bbox["y_min"] // cell_size), int(bbox["x_min"] // cell_size)
