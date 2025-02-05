@@ -40,6 +40,7 @@ class InferenceResultViewSet(ViewSet):
 
         try:
             # Charger les données JSON depuis le corps de la requête
+            print("request body : ", request.body)
             try:
                 data = json.loads(request.body)
             except json.JSONDecodeError as e:
