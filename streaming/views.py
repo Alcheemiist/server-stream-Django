@@ -48,7 +48,7 @@ class InferenceResultViewSet(ViewSet):
 
             # Vérifier que le JSON est un tableau d'objets
             if not data or not isinstance(data, list):
-                return JsonResponse({"error": "Le JSON doit contenir un tableau d'objets."}, status=400)
+                return JsonResponse({"error": "Le JSON doit contenir un tableau d'objets."}, status=401)
 
             # Vérification de la résolution à partir de la première entrée
             first_entry = data[0]
@@ -59,7 +59,7 @@ class InferenceResultViewSet(ViewSet):
             if width is None or height is None:
                 return JsonResponse(
                     {"error": "Les dimensions de l'image sont manquantes dans la première entrée."},
-                    status=400,
+                    status=402,
                 )
 
             # Déterminer les facteurs d'échelle pour les résolutions prises en charge
@@ -85,7 +85,7 @@ class InferenceResultViewSet(ViewSet):
                 try:
                     inference_data["inference_time"] = float(inference_time)
                 except ValueError:
-                    return JsonResponse({"error": f"Valeur invalide pour 'inference_time': {inference_time}"}, status=400)
+                    return JsonResponse({"error": f"Valeur invalide pour 'inference_time': {inference_time}"}, status=403)
 
                 # Générer un frame_id si absent
                 if "frame_id" not in inference_data:
@@ -99,13 +99,13 @@ class InferenceResultViewSet(ViewSet):
                     elif isinstance(inference_data["timestamp"], str):
                         datetime.fromisoformat(inference_data["timestamp"])
                 except (ValueError, KeyError, TypeError):
-                    return JsonResponse({"error": f"Timestamp invalide : {inference_data.get('timestamp')}"}, status=400)
+                    return JsonResponse({"error": f"Timestamp invalide : {inference_data.get('timestamp')}"}, status=404)
 
                 # Vérification et ajustement des bounding boxes
                 for i, detection in enumerate(inference_data.get("detections", [])):
                     bounding_box = detection.get("bounding_box")
                     if not bounding_box:
-                        return JsonResponse({"error": f"Détection {i} sans 'bounding_box'."}, status=400)
+                        return JsonResponse({"error": f"Détection {i} sans 'bounding_box'."}, status=406)
 
                     missing_keys = [key for key in ["x_min", "y_min", "x_max", "y_max"] if key not in bounding_box]
                     if missing_keys:
@@ -121,7 +121,7 @@ class InferenceResultViewSet(ViewSet):
                         detection["confidence"] = float(detection["confidence"])
                         detection["area"] = float(detection.get("area", 0))
                     except (ValueError, KeyError) as e:
-                        return JsonResponse({"error": f"Erreur dans les valeurs de bounding box : {str(e)}"}, status=400)
+                        return JsonResponse({"error": f"Erreur dans les valeurs de bounding box : {str(e)}"}, status=407)
 
                 cleaned_data.append(inference_data)
 
@@ -202,11 +202,6 @@ def live_view(request, client_id):
         'client_id': client_id,
         'enable_heatmap': enable_heatmap
     })
-
-
-
-
-
 
 
 
