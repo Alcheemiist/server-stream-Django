@@ -81,7 +81,7 @@ class InferenceResultViewSet(ViewSet):
             cleaned_data = []  
             for inference_data in data:
                 # Nettoyage du champ inference_time
-                inference_time = inference_data.get("inference_time", "0").replace("ms", "").replace("s", "").strip()
+                inference_time = inference_data.get("inference_time", "0")
                 try:
                     inference_data["inference_time"] = float(inference_time)
                 except ValueError:
