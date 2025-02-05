@@ -17,15 +17,6 @@ from django.views.decorators.csrf import csrf_exempt
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 import logging
-
-logger = logging.getLogger(__name__)
-
-
-logger = logging.getLogger(__name__)
-
-
-
-
 from rest_framework.viewsets import ViewSet
 
 
@@ -295,6 +286,8 @@ def receive_json(request):
     The received JSON is also saved to disk.
     Additionally, the data is broadcasted to WebSocket clients via Django Channels.
     """
+    logger.info("Content-Type: %s", request.content_type)
+    logger.info("Request body: %s", request.body)
     if request.method == 'POST':
         try:
             # Determine if the client sent a file upload or raw JSON
